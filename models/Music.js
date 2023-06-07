@@ -1,35 +1,39 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../db.js');
 
-const Music = sequelize.define('user', {
+const DataTypes = require('sequelize').DataTypes;
+const sequelize = require('../config/database.js');
+
+const Music = sequelize.define('music', {
     id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
         unique: true
     },
     title: {
-        type: Sequelize.STRING({ length: 50 }),
+        type: DataTypes.STRING({ length: 50 }),
         allowNull: false
     },
     genre: {
-        type: Sequelize.STRING({ length: 50 }),
+        type: DataTypes.STRING({ length: 50 }),
         allowNull: false
     },
     duration: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     play_count: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     release_date: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull: false
     },    
 }, {
     tableName: 'music',
     freezeTableName: true
 }) 
+
+
+module.exports = Music;

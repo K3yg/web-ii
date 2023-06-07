@@ -1,0 +1,15 @@
+
+const db =  require('./config/database.js');
+const Music = require('./models/Music');
+    
+(async () => {
+    try{
+        console.log('Connecting database...');
+        await db.sync({ force: true });
+        console.log('Connected');
+        await Music.findAll();
+    }catch(err){
+        console.log('Error connecting database');
+        console.log(err);
+    }
+})();
