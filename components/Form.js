@@ -1,11 +1,23 @@
 "use client"
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 
-function Form() {
+function Form(props) {
   
   const router = useRouter();
+  const params = useParams()
+
+  useState(() => {
+    async function getSong() {
+      const res = await fetch(`http://localhost:3000/api/song/${params.id}`);
+      const song = await res.json();
+      if (!song) return;
+      song.release_date = song.release_date.split('T')[0];
+      setFormData(song);
+    }
+    getSong();
+  }, []);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -24,27 +36,33 @@ function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (params.id) {
+      const res = await fetch(`http://localhost:3000/api/song/${params.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+    } else {
+      const res = await fetch('http://localhost:3000/api/song', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      setFormData({
+        title: '',
+        genre: '',
+        duration: '',
+        play_count: '',
+        release_date: ''
+      });
+    }
 
-    const res = await fetch('http://localhost:3000/api/song', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
-
-    router.refresh();
-
-    //  reset all fields after submit
-    setFormData({
-      title: '',
-      genre: '',
-      duration: '',
-      play_count: '',
-      release_date: ''
-    });
+    router.refresh();    
     
-    console.log(formData);
   };
 
   return (
