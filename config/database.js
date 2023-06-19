@@ -4,6 +4,7 @@ const sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: './database.sqlite', // Path to your SQLite database file
     dialectModule: require('sqlite3').verbose(), // Use the sqlite3 package as the SQLite dialect
+    logging: false // Disable logging
 });
 
 module.exports = sequelize;

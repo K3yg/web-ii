@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,9 +10,41 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+    
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <nav className="bg-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link legacyBehavior href="/">
+              <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Home
+              </a>
+            </Link>
+            <Link legacyBehavior href="/artist">
+              <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Artists
+              </a>  
+            </Link>
+            <Link legacyBehavior href="/login">
+              <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Login
+              </a>
+            </Link>
+            <Link legacyBehavior href="/user">
+              <a className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Create user
+              </a>
+            </Link>
+          </div>
+          <img className="h-8 w-auto" src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Green.png" alt="Workflow"/>
+        </div>
+      </div>
+    </nav>
+        {children}
+        </body>
     </html>
   )
 }

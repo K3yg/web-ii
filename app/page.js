@@ -9,7 +9,6 @@ const Home = async () => {
     return data.musics;
 }
 
-
 const songs = await getSongs();
 
   return (

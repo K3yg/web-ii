@@ -66,7 +66,7 @@ function Form(props) {
   };
 
   return (
-    <div className='text-black'>
+    <div className='text-black pt-16'>
       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         <div className="mb-4">
           <label htmlFor="title" className="block mb-2 text-white">

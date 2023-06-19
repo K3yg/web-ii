@@ -1,6 +1,8 @@
 const DataTypes = require('sequelize').DataTypes;
 const sequelize = require('../config/database.js');
 
+const bcrypt = require("bcryptjs");
+
 const User = sequelize.define('user', {
     id: {
         type: DataTypes.INTEGER,
@@ -18,8 +20,11 @@ const User = sequelize.define('user', {
         allowNull: false
     },
     password: {
-        type: DataTypes.STRING({ length: 50 }),
-        allowNull: false
+        type: DataTypes.STRING({ length: 255 }),
+        allowNull: false,
+        set(password) {
+            this.setDataValue("password", bcrypt.hashSync(password, 10));
+        }
     },
     type: {
         type: DataTypes.STRING({ length: 50 }),
@@ -30,5 +35,8 @@ const User = sequelize.define('user', {
     freezeTableName: true
 }) 
 
+User.prototype.validPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+};
 
 module.exports = User;

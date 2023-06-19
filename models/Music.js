@@ -1,5 +1,5 @@
 
-const DataTypes = require('sequelize').DataTypes;
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database.js');
 
 const Music = sequelize.define('music', {
